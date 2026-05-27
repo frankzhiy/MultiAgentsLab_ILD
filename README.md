@@ -15,8 +15,7 @@ MultiAgentsLab_ILD/
 ├── docs/               # 文档（架构设计、设计笔记、阶段计划、数据模式、协议、评估）
 ├── notebooks/          # Jupyter Notebooks（探索性分析、结果分析）
 ├── scripts/            # 脚本工具（环境搭建、运行入口、验证、导出）
-├── src/
-│   └── multiagentslab_ild/   # 核心 Python 包
+├── src/                      # 核心Python 包
 │       ├── schemas/          # Pydantic 数据模型定义
 │       ├── state/            # 全局/局部状态管理
 │       ├── agents/           # 各专科智能体实现

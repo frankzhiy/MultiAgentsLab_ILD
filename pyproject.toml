@@ -31,7 +31,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/multiagentslab_ild"]
+packages = ["src"]
 
 [tool.ruff]
 src = ["src"]
