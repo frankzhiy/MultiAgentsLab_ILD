@@ -1,0 +1,122 @@
+# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+*.pyo
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg-info/
+*.egg
+MANIFEST
+wheels/
+pip-wheel-metadata/
+
+# ============================================================
+# Virtual Environments
+# ============================================================
+.venv/
+venv/
+env/
+ENV/
+.env.local
+.env.*.local
+
+# ============================================================
+# Environment Variables (secrets)
+# ============================================================
+.env
+!.env.example
+
+# ============================================================
+# Testing & Coverage
+# ============================================================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+nosetests.xml
+pytest.xml
+
+# ============================================================
+# Type Checking
+# ============================================================
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+
+# ============================================================
+# Jupyter Notebooks
+# ============================================================
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ============================================================
+# Logs
+# ============================================================
+logs/
+*.log
+*.log.*
+
+# ============================================================
+# Outputs (large run results)
+# ============================================================
+outputs/runs/
+outputs/traces/
+outputs/reports/
+outputs/exports/
+# Keep placeholder files
+!outputs/**/.gitkeep
+
+# ============================================================
+# Data (raw / processed — potentially large or sensitive)
+# ============================================================
+data/raw_cases/*
+data/processed_cases/*
+!data/raw_cases/.gitkeep
+!data/processed_cases/.gitkeep
+
+# ============================================================
+# VS Code
+# ============================================================
+.vscode/settings.json
+.vscode/launch.json
+.vscode/*.code-workspace
+
+# ============================================================
+# macOS
+# ============================================================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ============================================================
+# Windows
+# ============================================================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ============================================================
+# Miscellaneous
+# ============================================================
+*.bak
+*.swp
+*.swo
+*.tmp
+*.temp
+.cache/
