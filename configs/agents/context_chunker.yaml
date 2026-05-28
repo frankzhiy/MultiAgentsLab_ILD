@@ -1,0 +1,24 @@
+agent_name: context_chunker
+
+# 两个 LLM 阶段（可独立配置 model / 参数）
+# ------------------------------------------------------------------
+# Phase 2: 句子分类（并行单句调用）
+sentence_classifier:
+  model: gpt-4o-mini
+  temperature: 0.0
+  max_tokens: 256
+  top_p: 1.0
+  timeout: 60
+  max_retries: 3
+  prompt_path: src/prompts/context_chunker/sentence_classifier_prompt.md
+  max_concurrency: 8          # 异步并发上限
+
+# Phase 3: 全局审查（一次调用）
+reviewer:
+  model: gpt-4o-mini
+  temperature: 0.0
+  max_tokens: 4096
+  top_p: 1.0
+  timeout: 120
+  max_retries: 3
+  prompt_path: src/prompts/context_chunker/review_prompt.md
