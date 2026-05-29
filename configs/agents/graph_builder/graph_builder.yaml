@@ -1,0 +1,35 @@
+agent_name: graph_builder
+
+# C-3：每个 SemanticChunk → 局部子图（两阶段：分析 + 映射）
+chunk_graph_builder:
+  model: gpt-5.5
+  temperature: 0.0
+  max_tokens: 4096
+  analysis_max_tokens: 4096
+  top_p: 1.0
+  timeout: 120
+  max_retries: 3
+  analysis_prompt_path: src/prompts/graph_builder/chunk_analysis_prompt.md
+  prompt_path: src/prompts/graph_builder/chunk_graph_prompt.md
+  max_concurrency: 4
+  # 低于此置信度的边触发 C-4 LLM 二次审查
+  confidence_threshold: 0.5
+
+# C-4：边的推断合理性 LLM 审查
+edge_validator:
+  model: gpt-5.5
+  temperature: 0.0
+  max_tokens: 256
+  top_p: 1.0
+  timeout: 60
+  max_retries: 3
+  max_concurrency: 4
+
+# C-D：SectionGraph 合并（节点共指审查）
+section_merger:
+  model: gpt-5.5
+  temperature: 0.0
+  max_tokens: 128
+  top_p: 1.0
+  timeout: 60
+  max_retries: 3

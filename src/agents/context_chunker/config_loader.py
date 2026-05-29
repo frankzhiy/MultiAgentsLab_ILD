@@ -27,7 +27,7 @@ def load_context_chunker_config(config_path: str | Path | None = None) -> dict[s
     with path.open("r", encoding="utf-8") as f:
         config = yaml.safe_load(f) or {}
 
-    required_top = {"agent_name", "sentence_classifier", "reviewer"}
+    required_top = {"agent_name", "sentence_classifier", "reviewer", "chunk_splitter"}
     missing = sorted(required_top - set(config))
     if missing:
         raise ValueError(
@@ -35,7 +35,7 @@ def load_context_chunker_config(config_path: str | Path | None = None) -> dict[s
         )
 
     required_phase_fields = {"model", "temperature", "max_tokens", "top_p", "prompt_path"}
-    for phase_key in ("sentence_classifier", "reviewer"):
+    for phase_key in ("sentence_classifier", "reviewer", "chunk_splitter"):
         phase_cfg = config.get(phase_key) or {}
         miss = sorted(required_phase_fields - set(phase_cfg))
         if miss:

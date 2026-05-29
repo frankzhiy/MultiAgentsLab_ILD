@@ -4,7 +4,7 @@ agent_name: context_chunker
 # ------------------------------------------------------------------
 # Phase 2: 句子分类（并行单句调用）
 sentence_classifier:
-  model: gpt-4o-mini
+  model: gpt-5.5
   temperature: 0.0
   max_tokens: 256
   top_p: 1.0
@@ -15,10 +15,21 @@ sentence_classifier:
 
 # Phase 3: 全局审查（一次调用）
 reviewer:
-  model: gpt-4o-mini
+  model: gpt-5.5
   temperature: 0.0
   max_tokens: 4096
   top_p: 1.0
   timeout: 120
   max_retries: 3
   prompt_path: src/prompts/context_chunker/review_prompt.md
+
+# Phase 4: 语义子切分（并行，每 section 一次调用）
+chunk_splitter:
+  model: gpt-5.5
+  temperature: 0.0
+  max_tokens: 2048
+  top_p: 1.0
+  timeout: 120
+  max_retries: 3
+  prompt_path: src/prompts/context_chunker/chunk_splitter_prompt.md
+  max_concurrency: 4

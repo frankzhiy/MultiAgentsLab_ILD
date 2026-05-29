@@ -12,6 +12,7 @@ import asyncio
 import logging
 from dataclasses import dataclass, field
 
+from src.agents.context_chunker.chunk_splitter import split_all_sections_async
 from src.agents.context_chunker.config_loader import load_context_chunker_config
 from src.agents.context_chunker.sentence_classifier import (
     SubclauseLabel,
@@ -20,6 +21,7 @@ from src.agents.context_chunker.sentence_classifier import (
     review_labels,
 )
 from src.agents.context_chunker.sentence_splitter import Sentence, split_sentences
+from src.schemas.context_chunker.chunk import SemanticChunk
 from src.schemas.context_chunker.discourse_taxonomy import DISCOURSE_TAXONOMY
 from src.schemas.context_chunker.raw_text import RawTextInput
 from src.utils.id_generator import generate_case_id, generate_text_hash
@@ -44,6 +46,7 @@ class DiscourseSectionedCase:
     sentences: list[Sentence] = field(default_factory=list)
     labels: list[SubclauseLabel] = field(default_factory=list)
     sections: list[DiscourseSection] = field(default_factory=list)
+    chunks: list[SemanticChunk] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return {
@@ -82,6 +85,7 @@ class DiscourseSectionedCase:
                 }
                 for sec in self.sections
             ],
+            "chunks": [c.to_dict() for c in self.chunks],
         }
 
 
@@ -170,6 +174,19 @@ async def section_raw_text_async(
     if logger:
         logger.info(f"  [Phase 3] ✓ 合并为 {len(sections)} 个篇章 section")
 
+    # Phase 4: 语义子切分
+    if logger:
+        logger.info("  [Phase 4] 语义子切分（per section LLM）…")
+    chunks = await split_all_sections_async(
+        sections=sections,
+        raw_text=text,
+        case_id=case_id,
+        config=config["chunk_splitter"],
+        logger=logger,
+    )
+    if logger:
+        logger.info(f"  [Phase 4] ✓ 共 {len(chunks)} 个 semantic chunk")
+
     return DiscourseSectionedCase(
         case_id=case_id,
         text_hash=text_hash,
@@ -177,6 +194,7 @@ async def section_raw_text_async(
         sentences=sentences,
         labels=labels,
         sections=sections,
+        chunks=chunks,
     )
 
 
